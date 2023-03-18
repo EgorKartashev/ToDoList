@@ -9,8 +9,6 @@ import UIKit
 
 class NewTaskViewController: UIViewController {
     
-    private let context = StorageManager.shared.persistentContainer.viewContext
-
     private lazy var taskTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "New Task"
@@ -88,17 +86,7 @@ class NewTaskViewController: UIViewController {
     }
     
     private func save(){
-        let task = Task(context: context)
-        task.title = taskTextField.text
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-      //  StorageManager.shared.saveContext()
+        StorageManager.shared.saveContext()
         dismiss(animated: true)
     }
     
